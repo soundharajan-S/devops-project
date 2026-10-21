@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: devops-project
+  labels:
+    app: devops-project
 spec:
   replicas: 2
   selector:
@@ -13,7 +15,7 @@ spec:
         app: devops-project
     spec:
       containers:
-            - name: devops-app
+            - name: devops-project
         image: 807598718740.dkr.ecr.ap-south-1.amazonaws.com/devops-project:latest
         ports:
                 - containerPort: 80
@@ -23,9 +25,9 @@ kind: Service
 metadata:
   name: devops-service
 spec:
-  type: LoadBalancer
   selector:
     app: devops-project
   ports:
     - port: 80
     targetPort: 80
+  type: LoadBalancer
