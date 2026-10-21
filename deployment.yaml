@@ -1,9 +1,7 @@
-cat > deployment.yaml <<'EOF'
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: devops-project
-  namespace: default
 spec:
   replicas: 2
   selector:
@@ -17,7 +15,6 @@ spec:
       containers:
             - name: devops-app
         image: 807598718740.dkr.ecr.ap-south-1.amazonaws.com/devops-project:latest
-        imagePullPolicy: Always
         ports:
                 - containerPort: 80
 ---
@@ -32,15 +29,3 @@ spec:
   ports:
     - port: 80
     targetPort: 80
-    protocol: TCP
-EOF
-
-cat deployment.yaml
-
-# Validate pannu
-kubectl apply --dry-run=client -f deployment.yaml
-echo "✅ YAML OK!"
-
-git add deployment.yaml
-git commit -m "Fix yaml indentation - final working"
-git push origin main
