@@ -1,33 +1,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: devops-project
+  creationTimestamp: null
   labels:
     app: devops-project
+  name: devops-project
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: devops-project
+  strategy: {}
   template:
     metadata:
+      creationTimestamp: null
       labels:
         app: devops-project
     spec:
       containers:
-            - name: devops-project
-        image: 807598718740.dkr.ecr.ap-south-1.amazonaws.com/devops-project:latest
-        ports:
-                - containerPort: 80
+      - image: 807598718740.dkr.ecr.ap-south-1.amazonaws.com/devops-project:latest
+        name: devops-project
+        resources: {}
+status: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
+  creationTimestamp: null
+  labels:
+    app: devops-service
   name: devops-service
 spec:
-  selector:
-    app: devops-project
   ports:
-    - port: 80
+  - name: 80-80
+    port: 80
+    protocol: TCP
     targetPort: 80
+  selector:
+    app: devops-service
   type: LoadBalancer
+status:
+  loadBalancer: {}
