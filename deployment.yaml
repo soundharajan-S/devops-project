@@ -19,7 +19,7 @@ spec:
         image: 807598718740.dkr.ecr.ap-south-1.amazonaws.com/devops-project:latest
         imagePullPolicy: Always
         ports:
-                - containerPort: 3000
+                - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -31,11 +31,16 @@ spec:
     app: devops-project
   ports:
     - port: 80
-    targetPort: 3000
+    targetPort: 80
     protocol: TCP
 EOF
 
 cat deployment.yaml
-git add deployment.yaml Jenkinsfile
-git commit -m "Add ECR auto push + EKS deploy - final"
+
+# Validate pannu
+kubectl apply --dry-run=client -f deployment.yaml
+echo "✅ YAML OK!"
+
+git add deployment.yaml
+git commit -m "Fix yaml indentation - final working"
 git push origin main
