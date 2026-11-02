@@ -30,6 +30,7 @@ pipeline {
     sh '''
       aws eks update-kubeconfig --region ap-south-1 --name devops-cluster
       kubectl apply -f deployment.yaml
+      kubectl rollout restart deployment/devops-project
       kubectl rollout status deployment/devops-project
       kubectl get svc devops-service
     ''' 
